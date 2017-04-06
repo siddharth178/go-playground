@@ -1,0 +1,11 @@
+{
+	"ImportPath": "go-playground",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/gocarina/gocsv",
+			"Rev": "ffef3ffc77bec026fefa6f76bd53d158cfa0e669"
+		}
+	]
+}
