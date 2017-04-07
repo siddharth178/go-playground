@@ -30,7 +30,7 @@ type UserCounter struct {
 
 func (uc *UserCounter) getCounterFunc() interface{} {
 	f := func(u User) {
-		fmt.Println(">>", u.Name, u.Age)
+		// fmt.Println(">>", u.Name, u.Age)
 		uc.cnt++
 	}
 	return f
@@ -65,6 +65,15 @@ func countRecords(r io.Reader, cntr Counter) (int, error) {
 	return cntr.getCount(), nil
 }
 
+func countRecordsTheOldWay(r io.Reader) (int, error) {
+	users := []User{}
+	err := gocsv.Unmarshal(r, &users)
+	if err != nil {
+		return 0, err
+	}
+	return len(users), nil
+}
+
 func main() {
 
 	booksData := `name,isbn
@@ -84,6 +93,13 @@ F3 L3,70`
 		fmt.Println(err)
 	} else {
 		fmt.Println("User count:", cnt)
+	}
+
+	cnt, err = countRecordsTheOldWay(bytes.NewBufferString(usersData))
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("User count (old way):", cnt)
 	}
 
 	cnt, err = countRecords(bytes.NewBufferString(booksData), &BookCounter{})
