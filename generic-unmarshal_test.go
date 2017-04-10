@@ -18,6 +18,16 @@ F8 L8,20
 F9 L9,70`
 )
 
+func Test_countRecords(t *testing.T) {
+	cnt, err := countRecords(bytes.NewBufferString(usersData), &UserCounter{})
+	if err != nil {
+		t.Error(err)
+	}
+	if cnt != 9 {
+		t.Errorf("expected: %d, actual: %d", 9, cnt)
+	}
+}
+
 func Benchmark_countRecords(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, err := countRecords(bytes.NewBufferString(usersData), &UserCounter{})
